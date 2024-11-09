@@ -1,0 +1,39 @@
+    Această aplicație este un client de linie de comandă conceput pentru a interacționa cu un sistem de bibliotecă prin cereri HTTP. 
+Clientul permite utilizatorilor să se înregistreze, să se autentifice, să acceseze biblioteca, să gestioneze cărți și să se deconecteze.
+
+Main:
+Funcția main() este punctul de intrare al aplicației. Aceasta gestionează interacțiunea utilizatorului printr-un ciclu continuu de așteptare 
+a comenzilor și apelare a funcțiilor corespunzătoare:
+-Inițializează session_cookie pentru a stoca cookie-ul de sesiune.
+-Un ciclu while continuu așteaptă introducerea unei comenzi de la utilizator.
+-În funcție de comanda introdusă, se apelează funcțiile corespunzătoare:
+register pentru a apela register_user()
+login pentru a apela login_user(session_cookie)
+enter_library pentru a apela enter_library(session_cookie)
+get_books pentru a apela get_books(session_cookie)
+get_book pentru a apela get_book(session_cookie)
+add_book pentru a apela add_book(session_cookie)
+delete_book pentru a apela delete_book(session_cookie)
+logout pentru a apela logout_user(session_cookie)
+-Dacă comanda introdusă este exit, programul se încheie.
+-La final, dacă session_cookie sau jwt_token sunt alocate, acestea sunt eliberate pentru a evita scurgerile de memorie.
+
+Funcții:
+register_user(): Înregistrează un nou utilizator cu numele de utilizator și parola furnizate.
+login_user(char *session_cookie): Autentifică un utilizator și stochează cookie-ul de sesiune.
+enter_library(char *session_cookie): Accesează biblioteca folosind cookie-ul de sesiune și obține un token JWT.
+get_books(char *session_cookie): Obține o listă cu toate cărțile din bibliotecă folosind tokenul JWT.
+get_book(char *session_cookie): Obține detalii despre o anumită carte folosind ID-ul acesteia și tokenul JWT.
+add_book(char *session_cookie): Adaugă o nouă carte în bibliotecă folosind tokenul JWT.
+delete_book(char *session_cookie): Șterge o anumită carte din bibliotecă folosind ID-ul acesteia și tokenul JWT.
+logout_user(char *session_cookie): Deconectează utilizatorul, invalidând cookie-ul de sesiune și tokenul JWT.
+
+Variabile Globale:
+char *jwt_token: Stochează tokenul JWT pentru cererile autentificate.
+char *session_cookie: Stochează cookie-ul de sesiune.
+
+Funcții de Utilitate:
+void print_response(char *response): Afișează răspunsul serverului.
+void clear_input_buffer(): Golește bufferul de intrare.
+char *extract_cookie(char *response): Extrage cookie-ul de sesiune din răspunsul serverului.
+char* extract_jwt_token(char *response): Extrage tokenul JWT din răspunsul serverului.
